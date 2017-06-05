@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="System">
+      <UniqueIdentifier>{7632bbd7-7fbb-4006-a7fa-cfd669ae072a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Layer">
+      <UniqueIdentifier>{514525cc-29ff-46af-90db-9dbf2d5d1d92}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="System\main.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="System\ArtificialNeuralNetwork.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="Layer\FullyConnectedLayer.cpp">
+      <Filter>Layer</Filter>
+    </ClCompile>
+    <ClCompile Include="Layer\InputLayer.cpp">
+      <Filter>Layer</Filter>
+    </ClCompile>
+    <ClCompile Include="Layer\BaseLayer.cpp">
+      <Filter>Layer</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="System\ArtificialNeuralNetwork.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="Layer\FullyConnectedLayer.h">
+      <Filter>Layer</Filter>
+    </ClInclude>
+    <ClInclude Include="Layer\InputLayer.h">
+      <Filter>Layer</Filter>
+    </ClInclude>
+    <ClInclude Include="Layer\BaseLayer.h">
+      <Filter>Layer</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
