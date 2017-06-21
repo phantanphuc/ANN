@@ -114,14 +114,20 @@
     <ClCompile Include="Layer\BaseLayer.cpp" />
     <ClCompile Include="Layer\FullyConnectedLayer.cpp" />
     <ClCompile Include="Layer\InputLayer.cpp" />
+    <ClCompile Include="Layer\LostLayer_MSE.cpp" />
+    <ClCompile Include="Layer\SigmoidLayer.cpp" />
     <ClCompile Include="System\ArtificialNeuralNetwork.cpp" />
     <ClCompile Include="System\main.cpp" />
+    <ClCompile Include="System\ParamManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Layer\BaseLayer.h" />
     <ClInclude Include="Layer\FullyConnectedLayer.h" />
     <ClInclude Include="Layer\InputLayer.h" />
+    <ClInclude Include="Layer\LostLayer_MSE.h" />
+    <ClInclude Include="Layer\SigmoidLayer.h" />
     <ClInclude Include="System\ArtificialNeuralNetwork.h" />
+    <ClInclude Include="System\ParamManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

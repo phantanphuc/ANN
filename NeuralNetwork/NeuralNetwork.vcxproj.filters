@@ -24,6 +24,15 @@
     <ClCompile Include="Layer\BaseLayer.cpp">
       <Filter>Layer</Filter>
     </ClCompile>
+    <ClCompile Include="Layer\SigmoidLayer.cpp">
+      <Filter>Layer</Filter>
+    </ClCompile>
+    <ClCompile Include="Layer\LostLayer_MSE.cpp">
+      <Filter>Layer</Filter>
+    </ClCompile>
+    <ClCompile Include="System\ParamManager.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="System\ArtificialNeuralNetwork.h">
@@ -37,6 +46,15 @@
     </ClInclude>
     <ClInclude Include="Layer\BaseLayer.h">
       <Filter>Layer</Filter>
+    </ClInclude>
+    <ClInclude Include="Layer\SigmoidLayer.h">
+      <Filter>Layer</Filter>
+    </ClInclude>
+    <ClInclude Include="Layer\LostLayer_MSE.h">
+      <Filter>Layer</Filter>
+    </ClInclude>
+    <ClInclude Include="System\ParamManager.h">
+      <Filter>System</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

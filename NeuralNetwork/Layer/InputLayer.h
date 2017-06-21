@@ -4,7 +4,7 @@
 #include "BaseLayer.h"
 #include <stdio.h>
 
-typedef float decimal;
+
 
 class InputLayer : public BaseLayer {
 public:
@@ -18,11 +18,19 @@ public:
 	*/
 
 	void readDataSetFromCSV(char* path, int targetsize);
+	void setTestDataset();
 	decimal* getDataSet();
+	
+	void forwardPropagation();
 
+	int getDataStride() { return stride; };
+	int getTargetSize() { return target_size; };
+
+	void Next();
+	void resetLayer();
 private:
 
-	char* rawDataBuffer;
+	char* rawDataBuffer = nullptr;
 	int buffer_data_len; // num of record / line
 	/*
 	The DataBuffer has structure:
@@ -30,8 +38,10 @@ private:
 		input1, target1, input2, target2, ....
 	]
 	*/
-	decimal * DataBuffer;
+	decimal * DataBuffer = nullptr;
 	int stride;
+	int target_size;
 
+	decimal* bias_w;
 };
 #endif

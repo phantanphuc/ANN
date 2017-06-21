@@ -3,10 +3,13 @@
 
 InputLayer::InputLayer(int layersize) : BaseLayer(layersize)
 {
+	layer_type = LayerType::Input;
+	Z_vector = nullptr;
 }
 
 InputLayer::~InputLayer(){
-
+	if (rawDataBuffer) delete rawDataBuffer;
+	if (DataBuffer) delete DataBuffer;
 }
 
 void InputLayer::readDataSetFromCSV(char * path, int targetsize)
@@ -34,6 +37,7 @@ void InputLayer::readDataSetFromCSV(char * path, int targetsize)
 	ptr = rawDataBuffer;
 
 	stride = targetsize + layer_size;
+	target_size = targetsize;
 
 	int DataBufferSize = stride * buffer_data_len;
 	DataBuffer = new decimal[DataBufferSize];
@@ -46,9 +50,44 @@ void InputLayer::readDataSetFromCSV(char * path, int targetsize)
 		writePtr++;
 		while ((*ptr != '\n') && (*ptr != ',')) ptr++; ptr++;
 	}
+
+	Z_vector = DataBuffer;
+
+}
+
+void InputLayer::setTestDataset()
+{
+	DataBuffer = new decimal[4];
+
+	stride = 4;
+	target_size = 2;
+
+	DataBuffer[0] = 0.05;
+	DataBuffer[1] = 0.1;
+	DataBuffer[2] = 0.01;
+	DataBuffer[3] = 0.99;
+
+	Z_vector = DataBuffer;
 }
 
 decimal * InputLayer::getDataSet()
 {
 	return DataBuffer;
+}
+
+
+void InputLayer::forwardPropagation()
+{
+	//if (Z_vector == nullptr) Z_vector = DataBuffer;
+	//else Z_vector += stride;
+}
+
+void InputLayer::Next()
+{
+	Z_vector += stride;
+}
+
+void InputLayer::resetLayer()
+{
+	Z_vector = DataBuffer;
 }
