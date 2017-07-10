@@ -18,10 +18,13 @@ public:
 
 	decimal* getWeight() { return weight; };
 
+	
+
 private:
 
 	int weightsize;
 	void updateWeight();
+	void updateWeightBias();
 
 	decimal* weight;
 	

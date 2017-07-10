@@ -8,8 +8,8 @@ InputLayer::InputLayer(int layersize) : BaseLayer(layersize)
 }
 
 InputLayer::~InputLayer(){
-	if (rawDataBuffer) delete rawDataBuffer;
-	if (DataBuffer) delete DataBuffer;
+	//if (rawDataBuffer) delete rawDataBuffer;
+	//if (DataBuffer) delete DataBuffer;
 }
 
 void InputLayer::readDataSetFromCSV(char * path, int targetsize)
@@ -22,7 +22,8 @@ void InputLayer::readDataSetFromCSV(char * path, int targetsize)
 	fseek(csvfile, 0, SEEK_SET);
 
 	rawDataBuffer = new char[filesize + 1];
-	fread_s(rawDataBuffer, filesize + 1, 1, filesize, csvfile);
+	fread_s(rawDataBuffer, filesize, 1, filesize, csvfile);
+	
 	////////////////////////////////////////////////////
 	//////////////// GET NUM OF RECORD /////////////////
 	////////////////////////////////////////////////////
@@ -32,6 +33,7 @@ void InputLayer::readDataSetFromCSV(char * path, int targetsize)
 	{
 		if (*ptr == '\n')
 			buffer_data_len++;
+
 		ptr++;
 	}
 	ptr = rawDataBuffer;
@@ -46,7 +48,9 @@ void InputLayer::readDataSetFromCSV(char * path, int targetsize)
 
 	
 	for (int i = 0; i < DataBufferSize; ++i) {
-		sscanf_s(ptr, "%f", writePtr);
+		float data = 0;
+		sscanf_s(ptr, "%f", &data);
+		*writePtr = decimal(data);
 		writePtr++;
 		while ((*ptr != '\n') && (*ptr != ',')) ptr++; ptr++;
 	}

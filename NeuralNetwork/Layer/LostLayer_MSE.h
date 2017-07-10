@@ -23,6 +23,9 @@ public:
 
 	void Next();
 	void resetLayer();
+
+	
+
 private:
 	decimal* target_ptr;
 	decimal* dataset_ptr;

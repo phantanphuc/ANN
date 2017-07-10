@@ -4,11 +4,16 @@
 #include "BaseLayer.h"
 
 #define SIGMOID(x) 1/(1.0 + exp(-x))
+#define TANH(x) (1 - exp(-2*x)) / (1 + exp(-2*x))
 
-class SigmoidLayer : public BaseLayer {
+enum ActivationFunction {
+	ACT_NONE, ACT_SIGMOID, ACT_TANH
+};
+
+class ActivationLayer : public BaseLayer {
 public:
-	SigmoidLayer(int size);
-	~SigmoidLayer();
+	ActivationLayer(int size);
+	~ActivationLayer();
 
 	void forwardPropagation();
 
@@ -16,8 +21,9 @@ public:
 	void initBias(int size);
 
 	void backPropagation(decimal* delta);
+	void setActivationFunction(ActivationFunction type);
 
 private:
-
+	ActivationFunction activation_function;
 };
 #endif

@@ -1,5 +1,7 @@
 #include "ArtificialNeuralNetwork.h"
 
+#include "Layer\LostLayer_MSE.h"
+
 ArtificialNeuralNetwork::ArtificialNeuralNetwork(){
 	paramManager = new ParamManager;
 }
@@ -46,9 +48,21 @@ void ArtificialNeuralNetwork::addBasicLayer(LayerType layertype, int num_of_node
 		addLayer(fullyconnectedlayer);
 	}
 	else if (layertype == LayerType::Sigmoid) {
-		SigmoidLayer* sigmoidlayer = new SigmoidLayer(num_of_node);
+		ActivationLayer* sigmoidlayer = new ActivationLayer(num_of_node);
+		sigmoidlayer->setActivationFunction(ActivationFunction::ACT_SIGMOID);
 		addLayer(sigmoidlayer);
 	}
+	else if (layertype == LayerType::Tanh) {
+		ActivationLayer* sigmoidlayer = new ActivationLayer(num_of_node);
+		sigmoidlayer->setActivationFunction(ActivationFunction::ACT_TANH);
+		addLayer(sigmoidlayer);
+	}
+	else if (layertype == LayerType::None) {
+		ActivationLayer* sigmoidlayer = new ActivationLayer(num_of_node);
+		sigmoidlayer->setActivationFunction(ActivationFunction::ACT_NONE);
+		addLayer(sigmoidlayer);
+	}
+
 	else if (layertype == LayerType::Lost_MES) {
 		LostLayer* lostlayer = new LostLayer(LostFunctionType::MSE, num_of_node);
 		addLayer(lostlayer);
@@ -77,10 +91,21 @@ decimal ArtificialNeuralNetwork::getLastLost()
 	return *(tail->layer->getZ());
 }
 
+decimal ArtificialNeuralNetwork::getLastPrediction()
+{
+	return *(tail->previousNode->layer->getZ());
+}
+
 void ArtificialNeuralNetwork::resetInputOutput()
 {
 	head->layer->resetLayer();
 	tail->layer->resetLayer();
+}
+
+void ArtificialNeuralNetwork::NextStepOneByOne()
+{
+	head->layer->Next();
+	tail->layer->Next();
 }
 
 decimal ArtificialNeuralNetwork::backPropagationOneByOne()
@@ -90,13 +115,21 @@ decimal ArtificialNeuralNetwork::backPropagationOneByOne()
 	return 0;
 }
 
-void ArtificialNeuralNetwork::trainOneByOne()
+void ArtificialNeuralNetwork::trainOneByOne(int numofiteration)
 {
-	
-	
 	resetInputOutput();
-	forwardPropagation();
-	
+	for (int n = 0; n < numofiteration; ++n, NextStepOneByOne()) {
+		forwardPropagation();
+		backPropagationOneByOne();
+
+		//printf("Loss = %f\n", getLastLost());
+	}
+
+}
+
+void ArtificialNeuralNetwork::trainBatch(int batchSize)
+{
+
 }
 
 void ArtificialNeuralNetwork::setUpfortest()
@@ -135,6 +168,67 @@ void ArtificialNeuralNetwork::setUpfortest()
 	b2[0] = 0.00f;
 	b2[1] = 0.00f;
 
-	dynamic_cast<LostLayer*>(tail->layer)->setInput(dynamic_cast<InputLayer*>(head->layer));
+	linkLostLayer();
 
+}
+
+void ArtificialNeuralNetwork::linkLostLayer()
+{
+	dynamic_cast<LostLayer*>(tail->layer)->setInput(dynamic_cast<InputLayer*>(head->layer));
+}
+
+void ArtificialNeuralNetwork::printAllWeight()
+{
+	printf("--------------------\n");
+	for (LayerNode* ptr = head; ; ptr = ptr->nextNode) {
+		if (ptr == nullptr) break;
+		if (ptr->layer->getLayerType() == LayerType::FullyConnected) {
+			decimal* weight = dynamic_cast<FullyConnectedLayer*>(ptr->layer)->getWeight();
+			for (int i = 0; i < ptr->layer->getLayerSize(); ++i) {
+				for (int j = 0; j < ptr->layer->getLastLayer()->getLayerSize(); ++ j)
+					printf("%f ", *weight++);
+				printf("\n");
+			}
+			printf("\n-------\n");
+		}
+	}
+}
+
+decimal ArtificialNeuralNetwork::simpleEvaluateAll(int datasetsize)
+{
+	decimal sum_lost = 0;
+
+	resetInputOutput();
+	for (int n = 0; n < datasetsize; ++n, NextStepOneByOne()) {
+		forwardPropagation();
+		sum_lost += getLastLost();
+	}
+	return sum_lost / decimal(datasetsize);
+}
+
+void ArtificialNeuralNetwork::writeDownData(char * path, int numofiteration)
+{
+	int output_size = tail->layer->getLayerSize();
+
+	FILE* result_file;
+	fopen_s(&result_file, path, "w");
+	char num[20];
+
+	for (int i = 0; i < sizeof(num); ++i) {
+		num[i] = '\0';
+	}
+
+	resetInputOutput();
+	for (int n = 0; n < numofiteration; ++n, NextStepOneByOne()) {
+		forwardPropagation();
+		backPropagationOneByOne();
+
+		decimal predict = getLastPrediction();
+
+		sprintf_s<sizeof(num)>(num, "%f\n", predict);
+
+		fwrite(&num, sizeof(num), 1, result_file);
+		//printf("Loss = %f\n", getLastLost());
+	}
+	fclose(result_file);
 }

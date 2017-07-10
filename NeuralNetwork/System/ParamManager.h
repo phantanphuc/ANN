@@ -11,9 +11,13 @@ public:
 	void setLearningRate(decimal lr) { learningRate = lr; };
 	decimal getLearningRate() { return learningRate; };
 
+	void setBiasLearningRate(decimal lr) { BiasLearningRate = lr; };
+	decimal getBiasLearningRate() { return BiasLearningRate; }
+
 private:
 	
-	decimal learningRate = 0.5;
+	decimal learningRate = 0.5f;
+	decimal BiasLearningRate = 0.005f;
 
 };
 #endif

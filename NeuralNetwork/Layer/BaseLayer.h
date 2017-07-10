@@ -2,15 +2,16 @@
 #define __BASELAYER_H__
 
 #include <random>
+#include <iostream>
 #include <time.h>
 #include "System\ParamManager.h"
 
-#define RANDOM_FACTOR 0.001f
+#define RANDOM_FACTOR 0.01f
 
 typedef float decimal;
 
 enum LayerType {
-	Input, FullyConnected, Sigmoid, Output, Lost_MES
+	Input, FullyConnected, Sigmoid, Tanh, None, Lost_MES
 };
 
 class BaseLayer{
@@ -32,8 +33,14 @@ public:
 	virtual void initBias(int size);
 
 	virtual void resetLayer() {};
+	virtual void Next() {};
+
+	virtual void updateWeight() {};
 
 	void setParamManagerRef(ParamManager* paramManager) { param_manager_ref = paramManager; };
+
+	void setUpdateBias(bool isupdate) { isUpdateBias = isupdate; };
+	BaseLayer* getLastLayer() { return previous_layer_ref; };
 
 protected:
 	/*
@@ -55,7 +62,9 @@ protected:
 	*/
 
 	decimal* gradien = nullptr;
+	decimal* gradien_bias = nullptr;
 	decimal* delta = nullptr;
+	bool isUpdateBias = false;
 
 	ParamManager* param_manager_ref = nullptr;
 };

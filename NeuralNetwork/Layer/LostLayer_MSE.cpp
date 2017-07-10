@@ -23,7 +23,6 @@ void LostLayer::forwardPropagation()
 			Z_vector[i] = (target[i] - input[i]) * (target[i] - input[i]) / 2.0f;
 			LostValue += Z_vector[i];
 		}
-		//LostValue = LostValue / float(target_size);
 	}
 }
 
