@@ -1,7 +1,7 @@
 #ifndef __PARAMMANAGER_H__
 #define __PARAMMANAGER_H__
 
-typedef float decimal;
+typedef double decimal;
 
 class ParamManager {
 public:

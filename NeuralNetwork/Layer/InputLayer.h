@@ -1,10 +1,22 @@
 #ifndef __INPUTLAYER_H__
 #define __INPUTLAYER_H__
 
+#include <iostream>
+#include <fstream>
+#include <vector>
 #include "BaseLayer.h"
 #include <stdio.h>
 
+#include "opencv2/core/core.hpp"
+#include "opencv2/imgproc/imgproc.hpp"
+#include "opencv2/highgui/highgui.hpp"
 
+using namespace cv;
+using namespace std;
+
+enum InputType {
+	NORMAL, MNIST
+};
 
 class InputLayer : public BaseLayer {
 public:
@@ -17,6 +29,7 @@ public:
 	targetsize:		size of output vector
 	*/
 
+	void readDataSetFromMNIST(char* pathdata, char* parTarget);
 	void readDataSetFromCSV(char* path, int targetsize);
 	void setTestDataset();
 	decimal* getDataSet();
@@ -28,7 +41,17 @@ public:
 
 	void Next();
 	void resetLayer();
+
+	decimal* getZ();
+
+	void read_Mnist(string filename, vector<cv::Mat> &vec);
+
 private:
+	InputType inputtype = NORMAL;
+
+	int reading_index;
+	vector<cv::Mat> image_vector;
+
 
 	char* rawDataBuffer = nullptr;
 	int buffer_data_len; // num of record / line

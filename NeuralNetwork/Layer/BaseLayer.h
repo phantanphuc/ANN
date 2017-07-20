@@ -8,7 +8,7 @@
 
 #define RANDOM_FACTOR 0.01f
 
-typedef float decimal;
+typedef double decimal;
 
 enum LayerType {
 	Input, FullyConnected, Sigmoid, Tanh, None, Lost_MES
