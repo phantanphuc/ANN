@@ -21,6 +21,7 @@ int ReverseInt(int i)
 	ch4 = (i >> 24) & 255;
 	return((int)ch1 << 24) + ((int)ch2 << 16) + ((int)ch3 << 8) + ch4;
 }
+/*
 void InputLayer::read_Mnist(string filename, vector<cv::Mat> &vec) {
 	ifstream file(filename, ios::binary);
 	if (file.is_open())
@@ -59,20 +60,7 @@ void InputLayer::read_Mnist(string filename, vector<cv::Mat> &vec) {
 
 			
 
-			/*
 			
-			cv::Mat tp = Mat::zeros(n_rows, n_cols, CV_8UC1);
-			for (int r = 0; r < n_rows; ++r)
-			{
-				for (int c = 0; c < n_cols; ++c)
-				{
-					unsigned char temp = 0;
-					file.read((char*)&temp, sizeof(temp));
-					tp.at<uchar>(r, c) = (int)temp;
-				}
-			}
-			vec.push_back(tp);
-			*/
 
 		}
 	}
@@ -105,7 +93,7 @@ void InputLayer::readDataSetFromMNIST(char * pathdata, char * parTarget)
 	m++;
 
 }
-
+*/
 void InputLayer::readDataSetFromCSV(char * path, int targetsize)
 {
 	inputtype = NORMAL;

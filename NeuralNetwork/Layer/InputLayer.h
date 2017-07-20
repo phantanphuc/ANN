@@ -7,11 +7,11 @@
 #include "BaseLayer.h"
 #include <stdio.h>
 
-#include "opencv2/core/core.hpp"
-#include "opencv2/imgproc/imgproc.hpp"
-#include "opencv2/highgui/highgui.hpp"
+//#include "opencv2/core/core.hpp"
+//#include "opencv2/imgproc/imgproc.hpp"
+//#include "opencv2/highgui/highgui.hpp"
 
-using namespace cv;
+//using namespace cv;
 using namespace std;
 
 enum InputType {
@@ -29,7 +29,7 @@ public:
 	targetsize:		size of output vector
 	*/
 
-	void readDataSetFromMNIST(char* pathdata, char* parTarget);
+	//void readDataSetFromMNIST(char* pathdata, char* parTarget);
 	void readDataSetFromCSV(char* path, int targetsize);
 	void setTestDataset();
 	decimal* getDataSet();
@@ -44,13 +44,13 @@ public:
 
 	decimal* getZ();
 
-	void read_Mnist(string filename, vector<cv::Mat> &vec);
+	//void read_Mnist(string filename, vector<cv::Mat> &vec);
 
 private:
 	InputType inputtype = NORMAL;
 
 	int reading_index;
-	vector<cv::Mat> image_vector;
+	//vector<cv::Mat> image_vector;
 
 
 	char* rawDataBuffer = nullptr;

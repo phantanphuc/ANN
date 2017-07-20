@@ -6,7 +6,7 @@ enum Work {
 } work;
 
 void main() {
-	work = WMNIST;
+	work = WSIN;
 	
 	switch (work)
 	{
@@ -20,7 +20,7 @@ void main() {
 		net.addBasicLayer(LayerType::Sigmoid, 1);
 		net.addBasicLayer(LayerType::Lost_MES, 1);
 
-		net.getInputLayer()->readDataSetFromMNIST("Dataset/MNIST/train-images.idx3-ubyte", "");
+		//net.getInputLayer()->readDataSetFromMNIST("Dataset/MNIST/train-images.idx3-ubyte", "");
 	}
 		break;
 	case WXORR:
